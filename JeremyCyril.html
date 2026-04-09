@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Leaders 2026</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root, [data-theme="light"] {
+    --color-bg: #f7f6f2; --color-surface: #f0eeea; --color-surface-2: #fbfbf9; --color-text: #28251d;
+    --color-text-muted: #7a7974; --color-border: #d4d1ca; --color-primary: #01696f; --grid-line: rgba(40,37,29,0.10);
+    --divider: rgba(40,37,29,0.18); --quad-evil: rgba(200,50,40,0.07); --quad-spineless: rgba(60,100,210,0.07);
+    --quad-inept: rgba(200,130,40,0.07); --quad-principled: rgba(60,160,80,0.07); --q-label: rgba(100,96,88,0.45);
+    --overlay: rgba(20,18,16,0.55); --card-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  }
+  [data-theme="dark"] {
+    --color-bg: #141312; --color-surface: #1c1b19; --color-surface-2: #22211f; --color-text: #cdccca;
+    --color-text-muted: #9a9894; --color-border: #2e2d2b; --color-primary: #4f98a3; --grid-line: rgba(255,255,255,0.06);
+    --divider: rgba(255,255,255,0.14); --quad-evil: rgba(220,60,50,0.09); --quad-spineless: rgba(80,130,230,0.09);
+    --quad-inept: rgba(200,140,50,0.09); --quad-principled: rgba(80,180,90,0.09); --q-label: rgba(200,198,194,0.28);
+    --overlay: rgba(0,0,0,0.7); --card-shadow: 0 24px 70px rgba(0,0,0,0.45);
+  }
+  html, body { min-height: 100dvh; background: var(--color-bg); color: var(--color-text); font-family: Inter, system-ui, sans-serif; transition: background .25s, color .25s; }
+  header { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 2rem; border-bottom:1px solid var(--color-border); gap:1rem; }
+  .title-block h1 { font-size: clamp(1rem, 1.5vw, 1.25rem); font-weight:600; letter-spacing:-0.01em; }
+  .title-block p { font-size:.8rem; color:var(--color-text-muted); margin-top:.2rem; }
+  .toggle-btn { background:var(--color-surface); border:1px solid var(--color-border); border-radius:9999px; padding:.45rem .8rem; font-size:.8rem; color:var(--color-text-muted); cursor:pointer; display:flex; align-items:center; gap:.4rem; transition:all .18s; }
+  .toggle-btn:hover { color:var(--color-text); border-color:var(--color-primary); }
+  #chart-container { width:100%; padding:1.5rem 1.5rem .5rem; }
+  #chart { width:100%; height:76vh; min-height:520px; }
+  footer { padding:.85rem 2rem; font-size:.75rem; color:var(--color-text-muted); border-top:1px solid var(--color-border); display:flex; gap:1.4rem; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:.4rem; }
+  .dot { width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); flex-shrink:0; }
+  .diamond { width:11px; height:11px; transform:rotate(45deg); border:2px solid rgba(255,255,255,0.3); flex-shrink:0; }
+  .square { width:11px; height:11px; border:2px solid rgba(255,255,255,0.3); flex-shrink:0; }
+  .faded { opacity:.32; }
+  .flag { font-size: 1em; margin-right: .35rem; }
+
+  .modal-backdrop { position:fixed; inset:0; background:var(--overlay); display:none; align-items:center; justify-content:center; padding:1.5rem; z-index:1000; }
+  .modal-backdrop.open { display:flex; }
+  .modal { width:min(960px, 100%); max-height:88vh; overflow:auto; background:var(--color-surface); border:1px solid var(--color-border); border-radius:22px; box-shadow:var(--card-shadow); }
+  .modal-inner { display:grid; grid-template-columns: 280px 1fr; }
+  .modal-photo { background:var(--color-surface-2); min-height:100%; }
+  .modal-photo img { width:100%; height:100%; object-fit:cover; min-height:100%; }
+  .modal-content { padding:1.5rem 1.5rem 1.25rem; }
+  .modal-top { display:flex; align-items:start; justify-content:space-between; gap:1rem; margin-bottom:1rem; }
+  .modal-name { font-size:1.45rem; font-weight:650; letter-spacing:-0.02em; display:flex; align-items:center; gap:.45rem; }
+  .modal-role { color:var(--color-text-muted); margin-top:.25rem; font-size:.95rem; }
+  .close-btn { background:var(--color-surface-2); border:1px solid var(--color-border); color:var(--color-text-muted); border-radius:9999px; width:38px; height:38px; font-size:1rem; cursor:pointer; }
+  .close-btn:hover { color:var(--color-text); border-color:var(--color-primary); }
+  .chips { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+  .chip { padding:.38rem .65rem; border-radius:9999px; font-size:.78rem; border:1px solid var(--color-border); background:var(--color-surface-2); }
+  .chip.evil { color:#ffb0aa; border-color:rgba(230,60,60,.28); background:rgba(230,60,60,.10); }
+  .chip.spineless { color:#aecdff; border-color:rgba(70,140,230,.28); background:rgba(70,140,230,.10); }
+  .chip.inept { color:#ffd49e; border-color:rgba(220,160,70,.28); background:rgba(220,160,70,.10); }
+  .chip.principled { color:#b7e5b1; border-color:rgba(80,180,90,.28); background:rgba(80,180,90,.10); }
+  .score-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:.75rem; margin:1rem 0 1.2rem; }
+  .score-card { background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:16px; padding:.8rem .9rem; }
+  .score-card .label { font-size:.75rem; color:var(--color-text-muted); margin-bottom:.35rem; }
+  .score-card .value { font-size:1.15rem; font-weight:650; }
+  .section-title { font-size:.9rem; font-weight:650; text-transform:uppercase; letter-spacing:.08em; color:var(--color-text-muted); margin:1.15rem 0 .55rem; }
+  .body-copy { line-height:1.6; color:var(--color-text); }
+  .body-copy p + p { margin-top:.7rem; }
+  .why-list { display:grid; gap:.7rem; margin-top:.4rem; }
+  .why-item { background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:14px; padding:.8rem .9rem; }
+  .why-item strong { display:block; margin-bottom:.2rem; }
+  @media (max-width: 760px) {
+    header { padding:1rem 1rem .9rem; align-items:start; }
+    #chart-container { padding:1rem 1rem .25rem; }
+    footer { padding:.8rem 1rem; }
+    .modal-inner { grid-template-columns:1fr; }
+    .modal-photo { max-height:320px; }
+    .score-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="title-block">
+    <h1>World Leaders 2026 — Character Taxonomy</h1>
+    <p>Quadrants are explicit character types: Evil, Spineless, Inept, and Principled. Click a point for a photo and full rationale.</p>
+  </div>
+  <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn"><span id="theme-icon">☀️</span> Light mode</button>
+</header>
+<div id="chart-container"><div id="chart"></div></div><div style="padding:0 2rem 1.25rem;">
+  <section style="max-width:980px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:18px;padding:1rem 1.1rem;line-height:1.55;">
+    <div style="font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:.55rem;">Methodology</div>
+    <p style="margin-bottom:.7rem;"><strong>Three dimensions:</strong> intent (pattern of disregard for human life), capability (demonstrated expertise and competence), and agency (how constrained by forces outside their control).</p>
+    <p style="margin-bottom:.45rem;"><strong>Four character types:</strong></p>
+    <p style="margin-bottom:.25rem;"><strong>Evil</strong> — deliberate harm.</p>
+    <p style="margin-bottom:.25rem;"><strong>Spineless</strong> — knows better, does less.</p>
+    <p style="margin-bottom:.25rem;"><strong>Inept</strong> — doesn't understand the situation well enough to act on their own interests.</p>
+    <p style="margin-bottom:.7rem;"><strong>Principled</strong> — good intent, high capability, acts on both. Currently empty.</p>
+    <p style="margin-bottom:.7rem;">Ineptitude is rare by design. Systems cull it before people reach the top. When you see it, it's usually domain-specific. Evil dominates because the system rewards it.</p>
+    <p style="margin-bottom:.7rem;">Leaders can occupy more than one category.</p>
+    <p style="margin-bottom:.7rem;">The constraint dimension is encoded as colour saturation and separates won't from can't.</p>
+    <p>Full methodology: <span style="color:var(--color-text-muted)">[link tbd]</span></p>
+  </section>
+</div>
+<footer>
+  <span class="legend-item"><span class="dot" style="background:rgba(230,60,60,0.9);border-color:rgba(230,60,60,1)"></span> Evil</span>
+  <span class="legend-item"><span class="diamond" style="background:rgba(70,140,230,0.9);border-color:rgba(70,140,230,1)"></span> Spineless</span>
+  <span class="legend-item"><span class="square" style="background:rgba(220,160,70,0.9);border-color:rgba(220,160,70,1)"></span> Inept</span>
+  <span class="legend-item"><span class="square" style="background:rgba(90,185,95,0.9);border-color:rgba(90,185,95,1)"></span> Principled</span>
+  <span class="legend-item">Saturation = free agency; faded markers are structurally constrained</span>
+</footer>
+<div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+    <div class="modal-inner">
+      <div class="modal-photo"><img id="modal-img" alt="Leader portrait"></div>
+      <div class="modal-content">
+        <div class="modal-top">
+          <div>
+            <div class="modal-name" id="modal-name"></div>
+            <div class="modal-role" id="modal-role"></div>
+          </div>
+          <button class="close-btn" onclick="closeModal()" aria-label="Close">✕</button>
+        </div>
+        <div class="chips" id="modal-chips"></div>
+        <div class="score-grid" id="modal-scores"></div>
+        <div class="section-title">Who they are</div>
+        <div class="body-copy" id="modal-who"></div>
+        <div class="section-title">Why ranked this way</div>
+        <div class="why-list" id="modal-why"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const leaders = [
+  {name:"Putin", flag:"🇷🇺", role:"President of Russia", intent:10, capability:8, constraint:9, taxonomy:["evil"], photo:"https://pplx-res.cloudinary.com/image/upload/pplx_search_images/8175a09c2beaf48e3f5af15353282c2d39602e88.jpg", who:["A long-ruling authoritarian leader who has built a highly centralized state around personal power.","His political system largely suppresses meaningful domestic opposition and concentrates decision-making at the top."], why:[{title:"Why Evil", text:"The war in Ukraine, repression at home, and willingness to trade vast human suffering for imperial ambition make this a deliberate harm case, not a policy disagreement."},{title:"Why high-capability", text:"He has maintained power for decades, neutralized rivals, and shaped a political order around security services and patronage."},{title:"Why high free agency", text:"There are few remaining institutional constraints on his choices, so the harms are strongly attributable to him personally."}]},
+  {name:"Xi", flag:"🇨🇳", role:"General Secretary of the CCP / President of China", intent:9, capability:9, constraint:10, taxonomy:["evil"], photo:"https://upload.wikimedia.org/wikipedia/commons/0/04/Xi_Jinping_%28November_2024%29_02.jpg", who:["China’s paramount leader, with power consolidated across party, state, and military institutions.","He represents one of the clearest examples of a leader whose strategic competence and moral choices are both unmistakable."], why:[{title:"Why Evil", text:"Mass repression in Xinjiang, destruction of autonomy in Hong Kong, and a broader authoritarian hardening point to deliberate domination rather than confusion or drift."},{title:"Why high-capability", text:"He has successfully centralized authority, disciplined rivals, and aligned institutions behind a coherent project."},{title:"Why maximum free agency", text:"He has eroded internal checks so thoroughly that his major choices are very hard to explain as structural compulsion."}]},
+  {name:"MBS", flag:"🇸🇦", role:"Crown Prince and de facto ruler of Saudi Arabia", intent:9, capability:7, constraint:9, taxonomy:["evil"], photo:"https://upload.wikimedia.org/wikipedia/commons/c/c9/%D8%A7%D9%84%D8%B5%D9%88%D8%B1%D8%A9_%D8%A7%D9%84%D8%B1%D8%B3%D9%85%D9%8A%D8%A9_%D9%84%D9%84%D8%A3%D9%85%D9%8A%D8%B1_%D9%85%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%B3%D9%84%D9%85%D8%A7%D9%86_%D8%A8%D9%86_%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2_%D8%A2%D9%84_%D8%B3%D8%B9%D9%88%D8%AF_%28%D9%85%D9%82%D8%B5%D9%88%D8%B5%D8%A9%29.jpg", who:["Saudi Arabia’s de facto ruler, combining dynastic power with an image of technocratic modernization.","His rule blends reformist branding with ruthless coercion."], why:[{title:"Why Evil", text:"The Khashoggi murder, domestic repression, and the Yemen war all support a classification rooted in deliberate cruelty as an instrument of rule."},{title:"Why capable", text:"He is tactically shrewd, internationally agile, and effective at consolidating control."},{title:"Why high free agency", text:"As the effective ruler of an absolute monarchy, he faces very limited institutional accountability."}]},
+  {name:"Trump", flag:"🇺🇸", role:"President of the United States", intent:8, capability:5, constraint:7, taxonomy:["evil"], photo:"https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg", who:["A populist leader whose political strength comes from spectacle, grievance, and institutional norm-breaking.","He is less strategically disciplined than Xi or Putin, but still highly dangerous because harm is often pursued openly for power."], why:[{title:"Why Evil", text:"The framework treats his attacks on democratic norms, rights, truth, and social cohesion as conscious tools of power, not misunderstanding."},{title:"Why mid-capability", text:"He is skilled at domination of attention and factional mobilization, but poor at disciplined governance and policy execution."},{title:"Why not fully unconstrained", text:"Courts, Congress, federalism, and civil society still create more friction around him than around the authoritarian rulers on the chart."}]},
+  {name:"Modi", flag:"🇮🇳", role:"Prime Minister of India", intent:7, capability:7, constraint:6, taxonomy:["evil","spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Prime_Minister_Of_Bharat_Shri_Narendra_Damodardas_Modi.jpg", who:["A majoritarian nationalist leader who has reshaped India’s political culture and institutions around Hindu supremacy.","He combines ideological direction with careful electoral management."], why:[{title:"Why Evil", text:"The erosion of Muslim civil rights and encouragement of sectarian politics are treated here as deliberate harms, not accidental fallout."},{title:"Why Spineless too", text:"On institutional decline, press freedom, and long-term democratic damage, he benefits from drift rather than confronting the consequences honestly."},{title:"Why capable", text:"He is politically disciplined, strategically communicative, and electorally formidable."}]},
+  {name:"Meloni", flag:"🇮🇹", role:"Prime Minister of Italy", intent:6.0, capability:6, constraint:5, taxonomy:["evil","spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/9/96/Giorgia_Meloni_Official_2024_%28cropped%29.jpg", who:["A hard-right nationalist leader balancing ideological politics with the constraints of EU membership and coalition government.","She presents radical rhetoric while often governing through selective pragmatism."], why:[{title:"Why Evil", text:"Migration policy and some rights-oriented rollbacks are treated as deliberate uses of state power against vulnerable groups."},{title:"Why Spineless", text:"She performs defiance while quietly relying on European structures she will not seriously confront or replace."},{title:"Why mid-level capability", text:"She is competent and adaptive, but not in the same league of control as the more consolidated authoritarians."}]},
+  {name:"Macron", flag:"🇫🇷", role:"President of France", intent:3, capability:7, constraint:6, taxonomy:["spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/3/3d/Emmanuel_Macron_February_2025.jpg", who:["A highly intelligent centrist technocrat who presents himself as a serious reformer and European statesman.","He often understands structural problems clearly but struggles to convert that understanding into durable legitimacy."], why:[{title:"Why Spineless", text:"The key critique is not ignorance but an unwillingness to shoulder the democratic cost of persuasion, coalition-building, and sustained accountability."},{title:"Why high-capability", text:"He is analytically strong, fluent in statecraft, and clearly understands the systems he is operating in."},{title:"Why moderate free agency", text:"France’s institutions give him substantial room to act, though not the near-total freedom seen in authoritarian systems."}]},
+  {name:"Merz", flag:"🇩🇪", role:"Chancellor of Germany", intent:3, capability:4, constraint:4, taxonomy:["spineless","inept"], photo:"https://upload.wikimedia.org/wikipedia/commons/4/46/Friedrich_Merz_2024.jpg", who:["A conservative leader shaped by fiscal orthodoxy, business conventionalism, and center-right competition with the far right.","He is the clearest borderline case where actual incapacity enters the framework."], why:[{title:"Why Inept", text:"The argument here is that he misreads the scale and nature of Germany’s current economic and institutional problems, applying an outdated rulebook to a new crisis."},{title:"Why Spineless too", text:"He has also borrowed far-right migration framing rather than confronting it, suggesting evasion as well as misjudgment."},{title:"Why only modestly constrained", text:"Germany’s institutions matter, but they do not fully explain the choice to cling to failed orthodoxies."}]},
+  {name:"Lula", flag:"🇧🇷", role:"President of Brazil", intent:2, capability:6, constraint:5, taxonomy:["spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/f/f3/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%282023%E2%80%932027%29.jpg", who:["A veteran left-wing politician with deep understanding of inequality, labor politics, and coalition management.","He is not read here as malign, but as too willing to settle for partial action."], why:[{title:"Why Spineless", text:"On climate, elite power, and structural reform, he often stops at the boundary of what is comfortable or survivable rather than what is necessary."},{title:"Why moderately capable", text:"He understands the machinery of politics well and can still navigate coalitions effectively."},{title:"Why moderately constrained", text:"Congress, coalition fragility, and economic limits are real, but not enough to erase agency."}]},
+  {name:"Starmer", flag:"🇬🇧", role:"Prime Minister of the United Kingdom", intent:1.6, capability:5.7, constraint:5, taxonomy:["spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/2/2d/Keir_Starmer_official_portrait.jpg", who:["A disciplined managerial politician whose appeal rests on caution, sobriety, and distance from ideological risk.","In this framework he represents the archetype of capable underreach."], why:[{title:"Why Spineless", text:"He is treated as someone who knows the scale of housing, inequality, and democratic repair — but retreats whenever boldness imposes visible political cost."},{title:"Why reasonably capable", text:"He is organized, legally minded, and better at message discipline than many peers."},{title:"Why moderately constrained", text:"He faces media pressure and institutional limits, but much of his caution is self-imposed."}]},
+  {name:"Carney", flag:"🇨🇦", role:"Prime Minister of Canada", intent:2, capability:9, constraint:6, taxonomy:["spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/8/8a/Mark_Carney_in_2025.png", who:["A high-capacity economic manager with exceptional fluency on finance, climate risk, and institutional design.","He is the chart’s clearest example of someone who could plausibly occupy the principled quadrant but does not yet earn it."], why:[{title:"Why Spineless", text:"The ranking treats him as someone who understands housing, climate, and political economy very well, yet governs with excessive caution to preserve credibility and manage risk."},{title:"Why very high-capability", text:"Technically and analytically, he is among the strongest figures on the chart."},{title:"Why only partly constrained", text:"External pressures are real, but not enough to explain away underperformance if he chooses managerial safety over moral ambition."}]},
+  {name:"Takaichi", flag:"🇯🇵", role:"Japanese conservative leadership figure", intent:2.4, capability:5.1, constraint:4, taxonomy:["spineless"], photo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Takaichi_Sanae_2025.jpg/960px-Takaichi_Sanae_2025.jpg", who:["A conservative nationalist shaped by party factionalism, bureaucratic continuity, and strategic caution.","She sits lower on capability and agency than the stronger figures in the chart’s upper half."], why:[{title:"Why Spineless", text:"The critique is institutional risk-aversion: preserving continuity rather than confronting hard structural choices on gender, defense, or climate."},{title:"Why mid-capability", text:"Competent enough to survive elite politics, but not obviously transformative or strategically exceptional."},{title:"Why fairly constrained", text:"Party structure, bureaucracy, and constitutional limits compress the space for independent action."}]},
+  {name:"Costa", flag:"🇪🇺", role:"President of the European Council", intent:1.2, capability:6.4, constraint:3, taxonomy:["spineless"], photo:"https://pplx-res.cloudinary.com/image/upload/pplx_search_images/d2980295427a7ec5d6b009b11e3110d4a8b39479.jpg", who:["A consensus-oriented European institutional leader operating in a role designed to smooth conflict rather than break through it.","He is the clearest case where the office itself encourages delay and compromise."], why:[{title:"Why Spineless", text:"In this framework, he symbolizes the moral evasiveness of consensus politics that knows the stakes but defaults to process and caution."},{title:"Why middling capability", text:"He is politically competent, but the role does not reward bold, transformative agency."},{title:"Why most constrained", text:"Among the leaders listed, his office is the most structurally dependent on consensus and therefore the most washed out on the chart."}]}
+];
+const jitter = { Lula:[0.35,0], Starmer:[-0.15,-0.7], Takaichi:[0.38,-0.58], Costa:[-0.55,0.62], MBS:[0,-0.5] };
+function makeColor(kind, constraint) { const t=(constraint-1)/9, a=0.24+t*0.76; if(kind==='evil') return `rgba(230,${Math.round(60+(1-t)*150)},${Math.round(60+(1-t)*150)},${a.toFixed(2)})`; if(kind==='spineless') return `rgba(${Math.round(65+(1-t)*160)},${Math.round(140+(1-t)*80)},235,${a.toFixed(2)})`; if(kind==='inept') return `rgba(230,${Math.round(150+(1-t)*70)},${Math.round(70+(1-t)*60)},${a.toFixed(2)})`; return `rgba(${Math.round(80+(1-t)*110)},${Math.round(185+(1-t)*40)},${Math.round(90+(1-t)*80)},${a.toFixed(2)})`; }
+function makeBorder(kind, constraint) { const t=(constraint-1)/9, a=(0.58+t*0.42).toFixed(2); if(kind==='evil') return `rgba(230,60,60,${a})`; if(kind==='spineless') return `rgba(70,140,230,${a})`; if(kind==='inept') return `rgba(220,160,70,${a})`; return `rgba(90,185,95,${a})`; }
+function primaryType(item){ if(item.taxonomy.includes('evil')) return 'evil'; if(item.taxonomy.includes('spineless') && item.taxonomy.includes('inept')) return 'inept'; if(item.taxonomy.includes('spineless')) return 'spineless'; return 'principled'; }
+function symbolFor(item){ const p=primaryType(item); if(p==='evil') return 'circle'; if(p==='spineless') return 'diamond'; return 'square'; }
+function isDark(){ return document.documentElement.getAttribute('data-theme')==='dark'; }
+function getLayout(){ const dark=isDark(), textColor=dark?'rgba(200,198,194,0.88)':'rgba(60,56,48,0.88)', gridColor=dark?'rgba(255,255,255,0.06)':'rgba(40,37,29,0.08)', dividerColor=dark?'rgba(255,255,255,0.14)':'rgba(40,37,29,0.16)', bgColor=dark?'#141312':'#f7f6f2', paperColor=dark?'#1c1b19':'#f0eeea', qLabel=dark?'rgba(200,198,194,0.30)':'rgba(80,76,68,0.35)'; const fills=dark?{evil:'rgba(220,60,50,0.09)',spin:'rgba(80,130,230,0.09)',inept:'rgba(200,140,50,0.09)',principled:'rgba(80,180,90,0.09)'}:{evil:'rgba(200,50,40,0.06)',spin:'rgba(60,100,210,0.06)',inept:'rgba(200,130,40,0.06)',principled:'rgba(60,160,80,0.06)'}; return { paper_bgcolor:paperColor, plot_bgcolor:bgColor, font:{color:textColor,family:"Inter, system-ui, sans-serif",size:12}, margin:{t:18,b:52,l:70,r:30}, xaxis:{range:[-0.5,10.5],tickvals:[0,2,4,6,8,10],title:{text:'← Good Intent · · · Malign →',font:{size:12}},gridcolor:gridColor,zerolinecolor:dividerColor,linecolor:dividerColor}, yaxis:{range:[-0.5,10.5],tickvals:[0,2,4,6,8,10],title:{text:'← Inept · · · Capable →',font:{size:12}},gridcolor:gridColor,zerolinecolor:dividerColor,linecolor:dividerColor}, shapes:[{type:'rect',x0:5,x1:10.5,y0:5,y1:10.5,fillcolor:fills.evil,line:{width:0},layer:'below'},{type:'rect',x0:-0.5,x1:5,y0:5,y1:10.5,fillcolor:fills.principled,line:{width:0},layer:'below'},{type:'rect',x0:5,x1:10.5,y0:-0.5,y1:5,fillcolor:fills.inept,line:{width:0},layer:'below'},{type:'rect',x0:-0.5,x1:5,y0:-0.5,y1:5,fillcolor:fills.spin,line:{width:0},layer:'below'},{type:'line',x0:5,x1:5,y0:-0.5,y1:10.5,line:{color:dividerColor,dash:'dot',width:1.5}},{type:'line',x0:-0.5,x1:10.5,y0:5,y1:5,line:{color:dividerColor,dash:'dot',width:1.5}},], annotations:[{x:9.8,y:10.3,text:'Evil',showarrow:false,font:{size:12,color:qLabel},xanchor:'right',yanchor:'top'},{x:0.2,y:10.3,text:'Principled',showarrow:false,font:{size:12,color:qLabel},xanchor:'left',yanchor:'top'},{x:9.8,y:0.2,text:'Inept',showarrow:false,font:{size:12,color:qLabel},xanchor:'right',yanchor:'bottom'},{x:0.2,y:0.2,text:'Spineless',showarrow:false,font:{size:12,color:qLabel},xanchor:'left',yanchor:'bottom'},], showlegend:false, hovermode:'closest', hoverlabel:{bgcolor:dark?'#2a2927':'#ffffff',bordercolor:dark?'#3a3937':'#d4d1ca',font:{size:13,color:dark?'#cdccca':'#28251d',family:'Inter, system-ui, sans-serif'},align:'left'} }; }
+function buildTraces(){ return leaders.map(item=>{ const [jx,jy]=jitter[item.name]||[0,0], x=item.intent+jx, y=item.capability+jy, p=primaryType(item); return { x:[x], y:[y], type:'scatter', mode:'markers+text', text:[`${item.flag} ${item.name}`], textposition:'top center', textfont:{size:11,color:isDark()?'rgba(220,218,214,0.92)':'rgba(50,46,38,0.92)'}, marker:{size:18,color:makeColor(p,item.constraint),symbol:symbolFor(item),line:{width:2,color:makeBorder(p,item.constraint)}}, customdata:[[item.name]], hovertemplate:`<b>${item.flag} ${item.name}</b><br>Character type: ${item.taxonomy.map(t=>t[0].toUpperCase()+t.slice(1)).join(' + ')}<br>Intent: ${item.intent}/10<br>Capability: ${item.capability}/10<br>Free agency: ${item.constraint}/10<extra></extra>`, showlegend:false }; }); }
+function render(){ Plotly.react('chart', buildTraces(), getLayout(), {responsive:true, displayModeBar:true, modeBarButtonsToRemove:['select2d','lasso2d','autoScale2d'], displaylogo:false}); }
+render();
+document.getElementById('chart').on('plotly_click', function(evt){ const name = evt.points[0].customdata[0]; const item = leaders.find(x=>x.name===name); if(item) openModal(item); });
+function chipLabel(type){ return type.charAt(0).toUpperCase()+type.slice(1); }
+function openModal(item){ document.getElementById('modal-name').innerHTML=`<span class="flag">${item.flag}</span><span>${item.name}</span>`; document.getElementById('modal-role').textContent=item.role; document.getElementById('modal-img').src=item.photo; document.getElementById('modal-img').alt=`Portrait of ${item.name}`; const chips=document.getElementById('modal-chips'); chips.innerHTML=''; item.taxonomy.forEach(type=>{ const el=document.createElement('span'); el.className=`chip ${type}`; el.textContent=chipLabel(type); chips.appendChild(el); }); const scores=document.getElementById('modal-scores'); scores.innerHTML=''; [ ['Intent', `${item.intent}/10`], ['Capability', `${item.capability}/10`], ['Free agency', `${item.constraint}/10`] ].forEach(([label,value])=>{ const card=document.createElement('div'); card.className='score-card'; card.innerHTML=`<div class="label">${label}</div><div class="value">${value}</div>`; scores.appendChild(card); }); const who=document.getElementById('modal-who'); who.innerHTML=item.who.map(p=>`<p>${p}</p>`).join(''); const why=document.getElementById('modal-why'); why.innerHTML=item.why.map(w=>`<div class="why-item"><strong>${w.title}</strong><div>${w.text}</div></div>`).join(''); const back=document.getElementById('modal-backdrop'); back.classList.add('open'); back.setAttribute('aria-hidden','false'); }
+function closeModal(){ const back=document.getElementById('modal-backdrop'); back.classList.remove('open'); back.setAttribute('aria-hidden','true'); }
+document.getElementById('modal-backdrop').addEventListener('click', (e)=>{ if(e.target.id==='modal-backdrop') closeModal(); }); document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); }); function toggleTheme(){ const html=document.documentElement, dark=html.getAttribute('data-theme')==='dark'; html.setAttribute('data-theme', dark?'light':'dark'); document.getElementById('theme-icon').textContent=dark?'🌙':'☀️'; document.getElementById('theme-btn').lastChild.textContent=dark?' Dark mode':' Light mode'; render(); }
+</script>
+</body>
+</html>
