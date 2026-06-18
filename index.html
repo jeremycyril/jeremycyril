@@ -53,7 +53,69 @@
     max-width:var(--maxw);
     margin:0 auto;
     padding:7vh 1.5rem 9vh;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:3.5rem;
+    align-items:center;
   }
+  .hero-text{min-width:0;}
+  .hero-art{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-art svg{width:100%;max-width:440px;height:auto;overflow:visible;}
+
+  /* stamp build + decay animation */
+  .stamp-ink{
+    fill:none;
+    stroke:var(--orange);
+    stroke-width:5;
+    opacity:0;
+  }
+  .stamp-word{
+    font-family:"League Spartan",sans-serif;
+    font-weight:700;
+    letter-spacing:0.04em;
+    fill:var(--orange);
+    opacity:0;
+  }
+  .stamp-mono{
+    font-family:"IBM Plex Mono",monospace;
+    letter-spacing:0.18em;
+    fill:var(--azure-line-strong);
+    opacity:0;
+  }
+  .hero-art.run .stamp-ink{animation:inkStamp 2.6s ease forwards;}
+  .hero-art.run .stamp-word{animation:wordStamp 2.6s ease forwards;}
+  .hero-art.run .stamp-mono{animation:monoFade 2.6s ease forwards;}
+  .hero-art.run .stamp-crack{animation:crackOpen 2.6s ease forwards;}
+
+  @keyframes wordStamp{
+    0%{opacity:0;transform:scale(1.35);}
+    14%{opacity:1;transform:scale(0.97);}
+    20%{transform:scale(1);}
+    62%{opacity:1;fill:var(--orange);}
+    100%{opacity:0.34;fill:var(--azure-line-strong);}
+  }
+  @keyframes inkStamp{
+    0%{opacity:0;stroke-dasharray:0 1400;}
+    14%{opacity:0.9;}
+    55%{opacity:0.9;stroke-dasharray:1400 0;stroke-dashoffset:0;}
+    100%{opacity:0.32;stroke-dasharray:10 12;}
+  }
+  @keyframes crackOpen{
+    0%,52%{opacity:0;}
+    100%{opacity:0.55;}
+  }
+  @keyframes monoFade{
+    0%,46%{opacity:0;}
+    100%{opacity:1;}
+  }
+  /* the rotating stamp group */
+  .stamp-group{transform-box:fill-box;transform-origin:center;transform:rotate(-9deg);}
   .eyebrow{
     font-family:"IBM Plex Mono",monospace;
     font-size:0.72rem;
@@ -322,6 +384,8 @@
   }
   footer.colophon .tag{color:var(--orange);}
   @media(max-width:860px){
+    .hero{grid-template-columns:1fr;gap:2.5rem;}
+    .hero-art{order:-1;max-width:340px;margin:0 auto;}
     .scrolly{grid-template-columns:1fr;gap:0;}
     .sticky-inner{height:55vh;top:0;background:var(--azure);z-index:5;border-bottom:1px solid var(--azure-line);justify-content:flex-end;padding-bottom:1rem;}
     .stage{max-width:280px;}
@@ -332,6 +396,10 @@
   @media(prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}
     .step{opacity:1;transform:none;}
+    .stamp-word{opacity:0.34;fill:var(--azure-line-strong);}
+    .stamp-ink{opacity:0.32;stroke-dasharray:10 12;}
+    .stamp-mono{opacity:1;}
+    .stamp-crack{opacity:0.55;}
   }
 </style>
 </head>
@@ -344,13 +412,37 @@
 </header>
 
 <section class="hero">
-  <p class="eyebrow">Dispatch · Tech sovereignty</p>
-  <h1>Sovereignty for Sale
-    <span class="sub">(Sold Separately)</span>
-  </h1>
-  <p class="standfirst">Canada promised to be master of its own house. The pitch was sovereignty. The receipts run on American silicon, Florida headquarters, and funding amounts that are notional and subject to negotiation.</p>
-  <p class="byline">Jeremy Cyril · ΛISTU · June 2026 · ~4 min read</p>
-  <div class="scrollcue"><span>Scroll</span><span>↓</span></div>
+  <div class="hero-text">
+    <p class="eyebrow">Dispatch · Tech sovereignty</p>
+    <h1>Sovereignty for Sale
+      <span class="sub">(Sold Separately)</span>
+    </h1>
+    <p class="standfirst">Canada promised to be master of its own house. The pitch was sovereignty. The receipts run on American silicon, Florida headquarters, and funding amounts that are notional and subject to negotiation.</p>
+    <p class="byline">Jeremy Cyril · ΛISTU · June 2026 · ~5min read</p>
+    <div class="scrollcue"><span>Scroll</span><span>↓</span></div>
+  </div>
+
+  <div class="hero-art" id="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 440 300" role="img">
+      <g class="stamp-group">
+        <!-- stamp border, drawn then cracked into dashes -->
+        <rect class="stamp-ink" x="34" y="74" width="372" height="152" rx="6"/>
+        <rect class="stamp-ink" x="46" y="86" width="348" height="128" rx="4" style="stroke-width:2;"/>
+        <!-- the word -->
+        <text class="stamp-word" x="220" y="150" text-anchor="middle" font-size="58">SOVEREIGN</text>
+        <!-- small caps top line -->
+        <text class="stamp-mono" x="220" y="108" text-anchor="middle" font-size="11">GOVERNMENT OF CANADA · CERTIFIED</text>
+        <!-- watermark beneath -->
+        <text class="stamp-mono" x="220" y="184" text-anchor="middle" font-size="11">NOTIONAL · SUBJECT TO NEGOTIATION</text>
+        <!-- crack lines breaking the ink -->
+        <g class="stamp-crack" stroke="var(--azure)" stroke-width="4" stroke-linecap="round">
+          <line x1="120" y1="70" x2="132" y2="120"/>
+          <line x1="262" y1="78" x2="252" y2="132"/>
+          <line x1="338" y1="74" x2="330" y2="118"/>
+        </g>
+      </g>
+    </svg>
+  </div>
 </section>
 
 <div class="scrolly">
@@ -471,7 +563,7 @@
 </div>
 
 <section class="closer">
-  <p class="punch">We will be masters of our own house, eventually, notionally, and subject to negotiation.</p>
+  <p class="punch">The announcement is the only part reliably manufactured in Canada. Everything else is eventual, notional, and subject to negotiation.</p>
 </section>
 
 <section class="sources">
@@ -501,6 +593,14 @@
 
 <script>
 (function(){
+  // hero stamp: run the build+decay once after first paint
+  var heroArt = document.getElementById('hero-art');
+  if(heroArt){
+    requestAnimationFrame(function(){
+      setTimeout(function(){ heroArt.classList.add('run'); }, 250);
+    });
+  }
+
   var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
   var units = Array.prototype.slice.call(document.querySelectorAll('#units .s-unit'));
   var rackframe = document.getElementById('rackframe');
