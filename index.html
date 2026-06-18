@@ -77,7 +77,7 @@
   }
   .standfirst{
     font-size:clamp(1.05rem,2.4vw,1.4rem);
-    max-width:46ch;
+    max-width:48ch;
     color:rgba(245,245,220,0.82);
     line-height:1.5;
     font-weight:400;
@@ -273,7 +273,7 @@
     font-size:clamp(2rem,6vw,4rem);
     line-height:1.05;
     color:var(--yellow);
-    max-width:20ch;
+    max-width:22ch;
     margin:0 auto;
   }
   .sources{
@@ -348,8 +348,8 @@
   <h1>Sovereignty for Sale
     <span class="sub">(Sold Separately)</span>
   </h1>
-  <p class="standfirst">Canada announces sovereignty by the billion, then quietly subsidizes a supply chain that terminates in California. The word does the work the infrastructure doesn't.</p>
-  <p class="byline">ΛISTU · June 2026 · </p>
+  <p class="standfirst">Canada promised to be master of its own house. The pitch was sovereignty. The receipts run on American silicon, Florida headquarters, and funding amounts that are notional and subject to negotiation.</p>
+  <p class="byline">Jeremy Cyril · ΛISTU · June 2026 · ~4 min read</p>
   <div class="scrollcue"><span>Scroll</span><span>↓</span></div>
 </section>
 
@@ -369,7 +369,7 @@
             </defs>
             <path d="M160 200 Q220 120 340 40" stroke="#FFD447" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)"/>
             <path d="M200 210 Q260 140 360 60" stroke="#FFD447" stroke-width="1.4" fill="none" stroke-dasharray="6 4" opacity="0.5" marker-end="url(#arr)"/>
-            <text x="320" y="30" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="0.14em" text-transform="uppercase" fill="#FFD447" text-anchor="middle">→ FLORIDA / NASDAQ</text>
+            <text x="320" y="30" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="0.14em" fill="#FFD447" text-anchor="middle">→ FLORIDA / NASDAQ</text>
             <circle cx="155" cy="205" r="12" fill="none" stroke="#FFD447" stroke-width="1.6"/>
             <circle cx="195" cy="215" r="12" fill="none" stroke="#FFD447" stroke-width="1.4" opacity="0.7"/>
             <text x="155" y="210" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#FFD447" text-anchor="middle">D-W</text>
@@ -394,14 +394,14 @@
             <rect class="s-unit" x="132" y="308" width="156" height="24" rx="2"/>
           </g>
           <!-- foreign label inside rack, hidden by default -->
-          <text id="foreign-label" x="210" y="240" text-anchor="middle" class="s-label" fill="#D55514" opacity="0">CORWEAVE / NVIDIA</text>
+          <text id="foreign-label" x="210" y="240" text-anchor="middle" class="s-label" fill="#D55514" opacity="0">COREWEAVE / NVIDIA</text>
           <!-- X mark for final state -->
           <g id="xmark" opacity="0" style="transition:opacity 0.6s;">
             <line x1="145" y1="168" x2="273" y2="326" stroke="#D55514" stroke-width="3" stroke-linecap="round"/>
             <line x1="273" y1="168" x2="145" y2="326" stroke="#D55514" stroke-width="3" stroke-linecap="round"/>
           </g>
           <!-- caption -->
-          <text x="210" y="368" text-anchor="middle" class="s-label" id="caption" fill="rgba(245,245,220,0.45)">site: notional</text>
+          <text x="210" y="368" text-anchor="middle" class="s-label" id="caption" fill="rgba(245,245,220,0.45)">house: own</text>
         </svg>
 
         <div class="vis-label" id="vis-label" style="color:var(--orange);"></div>
@@ -410,7 +410,7 @@
       <div class="readout">
         <div class="row"><span class="cap">Phase</span><span class="val" id="r-phasev">Announcement</span></div>
         <div class="bar-track"><div class="bar-fill" id="r-fill"></div></div>
-        <div class="row"><span id="r-label">Public supercomputer build</span><span class="val" id="r-pct">0% complete</span></div>
+        <div class="row"><span id="r-label">"Masters of our own house"</span><span class="val" id="r-pct">0% complete</span></div>
       </div>
     </div>
   </div>
@@ -419,52 +419,59 @@
 
     <div class="step" data-state="0">
       <div class="marker">01 · The podium</div>
-      <h2>The word that did the work was sovereignty</h2>
-      <p>On June 4, 2026, Mark Carney stood at a podium in Toronto and launched a national AI strategy called AI for All. The government projected it would unlock <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">$200 billion in growth</a> and create <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">250,000 AI jobs</a>, lifting Canadian AI adoption from just over 12 percent to 60 percent by 2034.</p>
-      <p>One word carried the announcement. Everything underneath it was still a procurement document.</p>
+      <h2>Masters of our own house</h2>
+      <p>On June 4, 2026, Mark Carney stood at a podium in Toronto to launch Canada's national AI strategy entitled <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">"AI for All."</a> The pitch was sovereignty, the good clean homegrown kind, free of foreign entanglement. Carney referred to the concept at least ten times by name. For comparison, compute got seven mentions, and intelligence, a lowly one.</p>
+      <p>The Prime Minister told the room that Canada would be "masters of our own house" in the virtual world. Though it turns out that that house is mostly sublet.</p>
     </div>
 
     <div class="step" data-state="1">
       <div class="marker">02 · The number nobody agreed on</div>
-      <h2>New money versus recycled commitments</h2>
-      <p>CBC headlined the package as <a class="fig" href="https://www.cbc.ca/news/politics/carney-ai-strategy-9.7223236">over $2 billion</a>. The Prime Minister's Office framed it as up to $200 billion of growth. Independent tallies that folded existing programs into the announcement landed <a class="fig" href="https://codetocloud.io/blog/canada-ai-for-all">well north of $3.5 billion</a>, not all of it new, some of it repackaging Budget 2025.</p>
-      <p class="aside">The ambiguity is not a footnote to the sovereignty story. It is the sovereignty story, announced from the stage before anyone left the room.</p>
+      <h2>Two billion, or two hundred, take your pick</h2>
+      <p>Starting with the money, which no one could quite agree on, we were bombarded with figures ranging from <a class="fig" href="https://www.cbc.ca/news/politics/carney-ai-strategy-9.7223236">$2 billion</a> to <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">$200 billion</a>, depending on whether you were counting spending or daydreaming about growth. Independent tallies that looked at the existing programs being folded into the announcement landed <a class="fig" href="https://codetocloud.io/blog/canada-ai-for-all">north of $3.5 billion</a>.</p>
+      <p class="aside">The ambiguity seems intentional. It may be the whole point.</p>
     </div>
 
     <div class="step" data-state="2">
-      <div class="marker">03 · The centerpiece</div>
-      <h2>The supercomputer does not exist</h2>
-      <p>The 2024 Sovereign AI Compute Strategy committed up to $2 billion; Budget 2025 expanded the envelope to <a class="fig" href="https://beststartup.ca/canada-launches-890-million-ai-supercomputer/">roughly $2.4 billion</a>. The public supercomputer runs through a program called SCIP, worth <a class="fig" href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">about $925.6 million</a>.</p>
-      <p>As of November 2025, none of the fifty most powerful supercomputers in the world sat in Canada. SCIP closed applications June 1, 2026. The winner gets <a class="fig" href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">eighteen months from signing</a> to switch the machine on. The clock has not started.</p>
-      <p class="aside">The program guide notes that all funding amounts are <a class="fig" href="https://ised-isde.canada.ca/site/ised/en/ai-sovereign-compute-infrastructure-program">"notional and subject to negotiation."</a> Sovereignty-as-press-release shipped in June. Sovereignty-as-infrastructure is a build clause.</p>
+      <div class="marker">03 · The framework</div>
+      <h2>Sovereignty as a waterfall, running backwards</h2>
+      <p>It uses Carney's Build-Partner-Buy framework: build in Canada first, partner with allies if you can't build, and buy from abroad only, in Carney's words, after exhausting these options. Sovereignty as a waterfall, cascading politely from domestic to foreign.</p>
+      <p>The trouble is that the receipts run the waterfall backwards.</p>
     </div>
 
     <div class="step" data-state="3">
       <div class="marker">04 · What actually shipped</div>
-      <h2>Foreign silicon, Canadian flag</h2>
-      <p>The largest near-term commitment went to Cohere, which received <a class="fig" href="https://www.glennklockwood.com/garden/canadian-sovereign-ai">up to C$240 million</a> to build a data centre with CoreWeave, an American firm running on Nvidia silicon. The flagship sovereignty buy is capacity assembled from the supply chain it claims to escape.</p>
-      <p>The Compute Access Fund is described in its own terms as a subsidy so Canadian firms are <a class="fig" href="https://tech-insider.org/ca/canada-ai-strategy-2026/">"not entirely dependent on American hyperscalers."</a> Not entirely dependent is the honest definition of sovereign.</p>
+      <h2>American silicon, Canadian invoice</h2>
+      <p>The largest near-term commitment goes to Cohere, which got <a class="fig" href="https://www.glennklockwood.com/garden/canadian-sovereign-ai">up to C$240 million</a> to build a data centre with CoreWeave, an American firm, on Nvidia chips. In other words, the flagship sovereignty play is American hardware running American silicon with a Canadian invoice stapled to the front.</p>
+      <p>Carney bragged in the same speech that Canada is one of only four countries with its own large language model. True. Though he failed to mention that the compute to run it largely isn't ours.</p>
     </div>
 
     <div class="step" data-state="4">
-      <div class="marker">05 · Run the tape on quantum</div>
-      <h2>The science stays. The upside drifts south.</h2>
-      <p>Canada's National Quantum Strategy is backed by <a class="fig" href="https://ised-isde.canada.ca/site/national-quantum-strategy/en/canadas-national-quantum-strategy">$360 million over seven years</a>. Germany committed roughly $2.8 billion CAD, France a €1.8 billion strategy. The government's own consultations warned the funding <a class="fig" href="https://betakit.com/government-of-canada-reveals-plans-for-360-million-national-quantum-strategy/">"may be insufficient to achieve the goals."</a></p>
-      <p>D-Wave, founded in British Columbia, is <a class="fig" href="https://www.theglobeandmail.com/business/technology/article-photonic-raises-200-million-becoming-latest-canadian-quantum-developer/">now based in Florida</a>. Xanadu merged with a Nasdaq shell, then arranged to raise <a class="fig" href="https://www.theglobeandmail.com/business/article-xanadu-strikes-deal-to-raise-us300-million-quantum-stocks-us-funding/">up to US$300 million</a> from a firm tied to the Trump family. Canada keeps the lab and rents out the upside.</p>
+      <div class="marker">05 · The fine print</div>
+      <h2>Not entirely dependent</h2>
+      <p>The honesty as usual is in the fine print. The Compute Access Fund is described in its own terms as a subsidy so Canadian firms are <a class="fig" href="https://tech-insider.org/ca/canada-ai-strategy-2026/">"not entirely dependent on American hyperscalers."</a></p>
+      <p>Not entirely. That qualifier is the most accurate word in the whole strategy, and it's doing its accurate work two clicks below the headline where nobody reads.</p>
     </div>
 
     <div class="step" data-state="5">
-      <div class="marker">06 · The portable halo</div>
-      <h2>Sovereignty attaches to whatever needs it</h2>
-      <p>Budget 2025 added <a class="fig" href="https://thequantuminsider.com/2025/11/06/canada-targets-quantum-as-strategic-industry-in-c334-million-defense-push/">$334.3 million</a> for quantum, reclassified under a new Defence Industrial Strategy. The technology did not change. The funding rationale did, migrating to wherever the political appetite was strongest that fiscal year.</p>
-      <p>The word converts an industrial subsidy into a geopolitical virtue, and the conversion completes at the announcement, years before any silicon is poured. The compute strategy concedes its dependence in its own grant language. The quantum strategy filed its own insufficiency in the consultation record.</p>
+      <div class="marker">06 · The same story in quantum</div>
+      <h2>The labs stay. The upside drifts south.</h2>
+      <p>Quantum tells the same story in a different costume. Canada's National Quantum Strategy is backed by <a class="fig" href="https://ised-isde.canada.ca/site/national-quantum-strategy/en/canadas-national-quantum-strategy">$360 million over seven years</a>, against Germany's roughly $2.8 billion CAD and France's €1.8 billion. The government's own consultations warned that the funding <a class="fig" href="https://betakit.com/government-of-canada-reveals-plans-for-360-million-national-quantum-strategy/">"may be insufficient to achieve the goals,"</a> which is the polite federal way of filing a complaint against yourself.</p>
+      <p>D-Wave, founded in British Columbia, <a class="fig" href="https://www.theglobeandmail.com/business/technology/article-photonic-raises-200-million-becoming-latest-canadian-quantum-developer/">now answers to Florida</a>. Xanadu merged with a Nasdaq shell and arranged to raise <a class="fig" href="https://www.theglobeandmail.com/business/article-xanadu-strikes-deal-to-raise-us300-million-quantum-stocks-us-funding/">up to US$300 million</a> from a firm tied to the Trump family. Canada keeps the labs and exports the upside.</p>
+    </div>
+
+    <div class="step" data-state="6">
+      <div class="marker">07 · The portable halo</div>
+      <h2>Power over ourselves, supply chain elsewhere</h2>
+      <p>Budget 2025 added <a class="fig" href="https://thequantuminsider.com/2025/11/06/canada-targets-quantum-as-strategic-industry-in-c334-million-defense-push/">$334.3 million</a> and reclassified it from the science budget to the Defence Industrial Strategy. The funding rationale just migrated to whichever department had political appetite that fiscal year.</p>
+      <p>Carney opened the speech by quoting Pope Leo XIV on artificial intelligence: never has humanity had such power over itself. The complication is that the power, the compute, the chips, the capital, the founders, mostly sits somewhere else.</p>
+      <p class="aside">The word "sovereign" turns an industrial subsidy into a geopolitical virtue years before any silicon is poured. The compute strategy concedes its dependence in its own grant language. The quantum strategy filed its own insufficiency in the consultation record.</p>
     </div>
 
   </div>
 </div>
 
 <section class="closer">
-  <p class="punch">The announcement is the only part reliably manufactured in Canada.</p>
+  <p class="punch">We will be masters of our own house, eventually, notionally, and subject to negotiation.</p>
 </section>
 
 <section class="sources">
@@ -472,7 +479,7 @@
   <ol>
     <li>AI for All launch, economic and jobs projections: Prime Minister of Canada / PMO, June 4 2026 — <a href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">pm.gc.ca</a></li>
     <li>"Over $2B in funding" headline: CBC News, June 4 2026 — <a href="https://www.cbc.ca/news/politics/carney-ai-strategy-9.7223236">cbc.ca</a></li>
-    <li>"Well north of $3.5 billion / repackages Budget 2025" tally: Code To Cloud — <a href="https://codetocloud.io/blog/canada-ai-for-all">codetocloud.io</a> <span class="flag">(named third-party tally, not an official figure)</span></li>
+    <li>"North of $3.5 billion / repackages Budget 2025" tally: Code To Cloud — <a href="https://codetocloud.io/blog/canada-ai-for-all">codetocloud.io</a> <span class="flag">(named third-party tally, not an official figure)</span></li>
     <li>Sovereign AI Compute Strategy $2B split; launch: Canadian Defence Review / ISED — <a href="https://canadiandefencereview.com/canada-launches-canadian-sovereign-ai-compute-strategy/">canadiandefencereview.com</a></li>
     <li>$2.4B expanded envelope, SCIP $890M: beststartup.ca — <a href="https://beststartup.ca/canada-launches-890-million-ai-supercomputer/">beststartup.ca</a></li>
     <li>SCIP $925.6M, 18-month build, no Canadian top-50 supercomputer: The Logic — <a href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">thelogic.co</a></li>
@@ -518,11 +525,11 @@
       xmark:false,
       drift:false,
       stampText:'Announced',
-      cap:'site: notional',
+      cap:'house: own',
       visText:'',
       phase:'Announcement',
       pct:0,
-      pctLabel:'Public supercomputer build',
+      pctLabel:'"Masters of our own house"',
       fillClass:''
     },
     {
@@ -547,12 +554,12 @@
       foreignLabel:false,
       xmark:false,
       drift:false,
-      stampText:'Announced',
-      cap:'SCIP: applications closed June 1',
-      visText:'Clock not started',
-      phase:'Procurement',
+      stampText:'BUILD · PARTNER · BUY',
+      cap:'waterfall: domestic first',
+      visText:'…in theory',
+      phase:'Framework',
       pct:0,
-      pctLabel:'Build clock: 18 months from award',
+      pctLabel:'Build-before-buy, as written',
       fillClass:''
     },
     {
@@ -564,17 +571,32 @@
       drift:false,
       stampText:'FOREIGN SILICON',
       cap:'racks: CoreWeave / Nvidia',
-      visText:'Not entirely sovereign',
+      visText:'Canadian invoice',
       phase:'Near-term buy',
       pct:0,
       pctLabel:'Domestically owned compute',
       fillClass:'foreign'
     },
     {
-      shellClass:'cracked',
+      shellClass:'built',
       frameClass:'warn',
       foreignCount:6,
       foreignLabel:true,
+      xmark:false,
+      drift:false,
+      stampText:'NOT ENTIRELY',
+      cap:'dependence: in fine print',
+      visText:'Not entirely sovereign',
+      phase:'Fine print',
+      pct:0,
+      pctLabel:'Independent of US hyperscalers',
+      fillClass:'foreign'
+    },
+    {
+      shellClass:'cracked',
+      frameClass:'warn',
+      foreignCount:6,
+      foreignLabel:false,
       xmark:false,
       drift:true,
       stampText:'HQ: DRIFTING',
@@ -624,7 +646,7 @@
 
     if(st.visText){
       visLabel.textContent = st.visText;
-      visLabel.style.color = idx === 5 ? 'var(--orange)' : 'rgba(245,245,220,0.7)';
+      visLabel.style.color = (idx === 6) ? 'var(--orange)' : 'rgba(245,245,220,0.7)';
       visLabel.classList.add('show');
     } else {
       visLabel.classList.remove('show');
