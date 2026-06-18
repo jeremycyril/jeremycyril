@@ -34,9 +34,6 @@
     letter-spacing:-0.01em;
     line-height:1.02;
   }
-  .mono{font-family:"IBM Plex Mono",monospace;}
-
-  /* ---------- masthead ---------- */
   header.masthead{
     max-width:var(--maxw);
     margin:0 auto;
@@ -52,8 +49,6 @@
   }
   header.masthead .brand{color:var(--yellow);font-weight:600;}
   header.masthead .brand b{font-weight:700;}
-
-  /* ---------- hero ---------- */
   .hero{
     max-width:var(--maxw);
     margin:0 auto;
@@ -106,8 +101,6 @@
     animation:bob 2.4s ease-in-out infinite;
   }
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
-
-  /* ---------- scrolly layout ---------- */
   .scrolly{
     max-width:var(--maxw);
     margin:0 auto;
@@ -154,12 +147,6 @@
   }
   .step p{margin:0 0 1.1rem;color:rgba(245,245,220,0.9);}
   .step p:last-child{margin-bottom:0;}
-  .step .fig{
-    color:var(--cream);
-    font-weight:500;
-    border-bottom:1px solid var(--orange);
-    white-space:nowrap;
-  }
   .step .aside{
     font-size:0.92rem;
     color:rgba(245,245,220,0.62);
@@ -167,37 +154,62 @@
     padding-left:1rem;
     line-height:1.55;
   }
+  a.fig{
+    color:var(--yellow);
+    font-weight:500;
+    border-bottom:1px solid rgba(255,212,71,0.4);
+    text-decoration:none;
+    transition:border-color 0.2s;
+  }
+  a.fig:hover{border-color:var(--yellow);}
 
-  /* ---------- the build visual ---------- */
+  /* stage */
   .stage{
     width:100%;
-    max-width:460px;
-    aspect-ratio:1/1;
+    max-width:420px;
     position:relative;
   }
-  .stage svg{width:100%;height:100%;overflow:visible;}
+  .stage svg{width:100%;height:auto;overflow:visible;}
+
+  /* svg transitions */
+  .s-shell{stroke:rgba(245,245,220,0.25);stroke-width:1.4;stroke-dasharray:6 5;fill:none;transition:stroke 0.7s,opacity 0.7s;}
+  .s-shell.built{stroke:rgba(245,245,220,0.55);stroke-dasharray:none;}
+  .s-shell.cracked{stroke:var(--orange);stroke-dasharray:3 6;opacity:0.5;}
+  .s-frame{stroke:rgba(245,245,220,0.3);stroke-width:1.6;fill:none;transition:stroke 0.7s;}
+  .s-frame.lit{stroke:var(--yellow);}
+  .s-frame.warn{stroke:var(--orange);}
+  .s-unit{fill:rgba(245,245,220,0.04);stroke:rgba(245,245,220,0.2);stroke-width:1.2;transition:fill 0.5s,stroke 0.5s;}
+  .s-unit.foreign{fill:rgba(213,85,20,0.35);stroke:var(--orange);stroke-dasharray:4 2;}
+  .s-unit.sovereign{fill:rgba(255,212,71,0.15);stroke:var(--yellow);}
+  .s-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;transition:opacity 0.6s;}
+  .s-ground{stroke:rgba(245,245,220,0.3);stroke-width:1.4;}
+
+  /* stamp */
   .stamp{
     position:absolute;
-    top:8%;right:2%;
+    top:4%;right:-2%;
     font-family:"League Spartan",sans-serif;
     font-weight:700;
-    font-size:1.05rem;
-    letter-spacing:0.08em;
+    font-size:1rem;
+    letter-spacing:0.1em;
     text-transform:uppercase;
     color:var(--orange);
     border:3px solid var(--orange);
-    padding:0.35rem 0.8rem;
-    transform:rotate(-9deg);
+    padding:0.3rem 0.75rem;
+    transform:rotate(-11deg);
     opacity:0;
-    transition:opacity 0.6s ease;
+    transition:opacity 0.5s ease,background 0.5s;
+    background:rgba(7,63,83,0.85);
   }
   .stamp.show{opacity:1;}
+
+  /* readout */
   .readout{
-    margin-top:1.6rem;
+    margin-top:1.4rem;
     width:100%;
-    max-width:460px;
+    max-width:420px;
     font-family:"IBM Plex Mono",monospace;
-    font-size:0.78rem;
+    font-size:0.76rem;
     letter-spacing:0.04em;
     color:var(--azure-line-strong);
   }
@@ -206,29 +218,49 @@
     border:1px solid var(--azure-line);
     margin:0.5rem 0;
     position:relative;
-    background:rgba(0,0,0,0.18);
+    background:rgba(0,0,0,0.2);
   }
   .readout .bar-fill{
     position:absolute;left:0;top:0;bottom:0;
     width:0%;
     background:var(--yellow);
-    transition:width 0.7s ease;
+    transition:width 0.7s ease,background 0.5s;
   }
-  .readout .row{display:flex;justify-content:space-between;}
-  .readout .val{color:var(--yellow);}
+  .readout .bar-fill.foreign{background:var(--orange);}
+  .readout .row{display:flex;justify-content:space-between;gap:1rem;}
+  .readout .val{color:var(--yellow);text-align:right;}
   .readout .cap{color:var(--orange);}
 
-  /* svg element states */
-  .rack{stroke:var(--azure-line);stroke-width:1.4;fill:none;transition:all 0.6s ease;}
-  .rack.lit{stroke:var(--yellow);}
-  .unit{fill:none;stroke:var(--azure-line);stroke-width:1.4;transition:all 0.6s ease;}
-  .unit.filled{fill:rgba(255,212,71,0.12);stroke:var(--yellow);}
-  .unit.foreign{fill:rgba(213,85,20,0.16);stroke:var(--orange);stroke-dasharray:4 3;}
-  .ghost{stroke:var(--azure-line);stroke-width:1.2;stroke-dasharray:5 5;fill:none;opacity:0.6;}
-  .label-svg{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;}
-  .drift{transition:transform 1s ease,opacity 1s ease;}
+  /* big visual label overlay on svg */
+  .vis-label{
+    position:absolute;
+    bottom:14%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:"League Spartan",sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    text-align:center;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.5s ease,color 0.5s;
+    white-space:nowrap;
+  }
+  .vis-label.show{opacity:1;}
 
-  /* ---------- close ---------- */
+  /* drift arrow overlay */
+  .drift-overlay{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.7s ease;
+  }
+  .drift-overlay.show{opacity:1;}
+
+  /* closer */
   .closer{
     max-width:var(--maxw);
     margin:0 auto;
@@ -244,8 +276,6 @@
     max-width:20ch;
     margin:0 auto;
   }
-
-  /* ---------- sources ---------- */
   .sources{
     max-width:var(--maxw);
     margin:0 auto;
@@ -263,10 +293,8 @@
   .sources ol{
     list-style:none;counter-reset:s;
     padding:0;margin:0;
-    columns:2;
-    column-gap:3rem;
-    font-size:0.84rem;
-    line-height:1.5;
+    columns:2;column-gap:3rem;
+    font-size:0.84rem;line-height:1.5;
     color:rgba(245,245,220,0.7);
   }
   .sources li{
@@ -280,31 +308,23 @@
     content:counter(s,decimal-leading-zero);
     position:absolute;left:0;top:0;
     font-family:"IBM Plex Mono",monospace;
-    color:var(--orange);
-    font-size:0.78rem;
+    color:var(--orange);font-size:0.78rem;
   }
   .sources a{color:var(--yellow);text-decoration:none;border-bottom:1px solid var(--azure-line);word-break:break-word;}
   .sources a:hover{border-color:var(--yellow);}
-  .sources .flag{
-    color:rgba(245,245,220,0.55);
-    font-style:italic;
-  }
+  .sources .flag{color:rgba(245,245,220,0.55);font-style:italic;}
   footer.colophon{
-    max-width:var(--maxw);
-    margin:0 auto;
+    max-width:var(--maxw);margin:0 auto;
     padding:0 1.5rem 8vh;
     font-family:"IBM Plex Mono",monospace;
-    font-size:0.72rem;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
+    font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;
     color:var(--azure-line-strong);
   }
   footer.colophon .tag{color:var(--orange);}
-
-  /* ---------- responsive ---------- */
   @media(max-width:860px){
     .scrolly{grid-template-columns:1fr;gap:0;}
-    .sticky-inner{height:62vh;top:0;background:var(--azure);z-index:5;border-bottom:1px solid var(--azure-line);}
+    .sticky-inner{height:55vh;top:0;background:var(--azure);z-index:5;border-bottom:1px solid var(--azure-line);justify-content:flex-end;padding-bottom:1rem;}
+    .stage{max-width:280px;}
     .steps-col{padding:4vh 0 12vh;}
     .step{min-height:auto;margin-bottom:9vh;opacity:1;transform:none;}
     .sources ol{columns:1;}
@@ -329,93 +349,114 @@
     <span class="sub">(Sold Separately)</span>
   </h1>
   <p class="standfirst">Canada announces sovereignty by the billion, then quietly subsidizes a supply chain that terminates in California. The word does the work the infrastructure doesn't.</p>
-  <p class="byline">ΛISTU · June 2026 · ~850 words</p>
+  <p class="byline">ΛISTU · June 2026 · </p>
   <div class="scrollcue"><span>Scroll</span><span>↓</span></div>
 </section>
 
 <div class="scrolly">
-  <!-- sticky visual -->
   <div class="sticky-col">
     <div class="sticky-inner">
       <div class="stage">
         <div class="stamp" id="stamp">Announced</div>
-        <svg viewBox="0 0 400 400" aria-hidden="true">
-          <!-- ground line -->
-          <line x1="40" y1="340" x2="360" y2="340" class="rack" id="ground"/>
-          <!-- building outline (ghost / planned) -->
-          <path id="shell" class="ghost" d="M70 340 L70 110 L200 60 L330 110 L330 340"/>
+
+        <!-- drift arrow overlay -->
+        <div class="drift-overlay" id="drift-overlay">
+          <svg viewBox="0 0 420 380" style="width:100%;height:100%;position:absolute;top:0;left:0;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#FFD447"/>
+              </marker>
+            </defs>
+            <path d="M160 200 Q220 120 340 40" stroke="#FFD447" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+            <path d="M200 210 Q260 140 360 60" stroke="#FFD447" stroke-width="1.4" fill="none" stroke-dasharray="6 4" opacity="0.5" marker-end="url(#arr)"/>
+            <text x="320" y="30" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="0.14em" text-transform="uppercase" fill="#FFD447" text-anchor="middle">→ FLORIDA / NASDAQ</text>
+            <circle cx="155" cy="205" r="12" fill="none" stroke="#FFD447" stroke-width="1.6"/>
+            <circle cx="195" cy="215" r="12" fill="none" stroke="#FFD447" stroke-width="1.4" opacity="0.7"/>
+            <text x="155" y="210" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#FFD447" text-anchor="middle">D-W</text>
+            <text x="195" y="220" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#FFD447" text-anchor="middle" opacity="0.7">XAN</text>
+          </svg>
+        </div>
+
+        <svg id="mainsvg" viewBox="0 0 420 380" aria-hidden="true">
+          <!-- ground -->
+          <line x1="40" y1="340" x2="380" y2="340" class="s-ground"/>
+          <!-- building shell -->
+          <path id="shell" class="s-shell" d="M80 340 L80 120 L210 65 L340 120 L340 340"/>
           <!-- rack frame -->
-          <rect id="rackframe" class="rack" x="110" y="150" width="180" height="190" rx="4"/>
-          <!-- server units (rows) -->
+          <rect id="rackframe" class="s-frame" x="120" y="148" width="180" height="192" rx="3"/>
+          <!-- server units -->
           <g id="units">
-            <rect class="unit u" x="122" y="162" width="156" height="22" rx="2"/>
-            <rect class="unit u" x="122" y="190" width="156" height="22" rx="2"/>
-            <rect class="unit u" x="122" y="218" width="156" height="22" rx="2"/>
-            <rect class="unit u" x="122" y="246" width="156" height="22" rx="2"/>
-            <rect class="unit u" x="122" y="274" width="156" height="22" rx="2"/>
-            <rect class="unit u" x="122" y="302" width="156" height="22" rx="2"/>
+            <rect class="s-unit" x="132" y="158" width="156" height="24" rx="2"/>
+            <rect class="s-unit" x="132" y="188" width="156" height="24" rx="2"/>
+            <rect class="s-unit" x="132" y="218" width="156" height="24" rx="2"/>
+            <rect class="s-unit" x="132" y="248" width="156" height="24" rx="2"/>
+            <rect class="s-unit" x="132" y="278" width="156" height="24" rx="2"/>
+            <rect class="s-unit" x="132" y="308" width="156" height="24" rx="2"/>
           </g>
-          <!-- drift group: quantum companies leaving -->
-          <g id="driftgroup" class="drift" opacity="0">
-            <circle cx="200" cy="120" r="9" fill="none" stroke="#FFD447" stroke-width="1.4"/>
-            <circle cx="232" cy="120" r="9" fill="none" stroke="#FFD447" stroke-width="1.4"/>
-            <circle cx="264" cy="120" r="9" fill="none" stroke="#FFD447" stroke-width="1.4"/>
-            <text x="200" y="100" text-anchor="middle" class="label-svg" fill="#D55514">→ south</text>
+          <!-- foreign label inside rack, hidden by default -->
+          <text id="foreign-label" x="210" y="240" text-anchor="middle" class="s-label" fill="#D55514" opacity="0">CORWEAVE / NVIDIA</text>
+          <!-- X mark for final state -->
+          <g id="xmark" opacity="0" style="transition:opacity 0.6s;">
+            <line x1="145" y1="168" x2="273" y2="326" stroke="#D55514" stroke-width="3" stroke-linecap="round"/>
+            <line x1="273" y1="168" x2="145" y2="326" stroke="#D55514" stroke-width="3" stroke-linecap="round"/>
           </g>
-          <text x="200" y="368" text-anchor="middle" class="label-svg" id="caption" fill="rgba(245,245,220,0.5)">site: notional</text>
+          <!-- caption -->
+          <text x="210" y="368" text-anchor="middle" class="s-label" id="caption" fill="rgba(245,245,220,0.45)">site: notional</text>
         </svg>
+
+        <div class="vis-label" id="vis-label" style="color:var(--orange);"></div>
       </div>
+
       <div class="readout">
-        <div class="row"><span class="cap" id="r-phase">Phase</span><span class="val" id="r-phasev">Announcement</span></div>
+        <div class="row"><span class="cap">Phase</span><span class="val" id="r-phasev">Announcement</span></div>
         <div class="bar-track"><div class="bar-fill" id="r-fill"></div></div>
         <div class="row"><span id="r-label">Public supercomputer build</span><span class="val" id="r-pct">0% complete</span></div>
       </div>
     </div>
   </div>
 
-  <!-- steps -->
   <div class="steps-col">
 
     <div class="step" data-state="0">
       <div class="marker">01 · The podium</div>
       <h2>The word that did the work was sovereignty</h2>
-      <p>On June 4, 2026, Mark Carney stood at a podium in Toronto and launched a national AI strategy called AI for All. The government projected it would unlock <span class="fig">$200 billion in growth</span> and create <span class="fig">250,000 AI jobs</span>, lifting Canadian AI adoption from just over 12 percent to 60 percent by 2034.</p>
+      <p>On June 4, 2026, Mark Carney stood at a podium in Toronto and launched a national AI strategy called AI for All. The government projected it would unlock <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">$200 billion in growth</a> and create <a class="fig" href="https://www.pm.gc.ca/en/news/news-releases/2026/06/04/prime-minister-carney-launches-ai-all-canadas-new-national-artificial">250,000 AI jobs</a>, lifting Canadian AI adoption from just over 12 percent to 60 percent by 2034.</p>
       <p>One word carried the announcement. Everything underneath it was still a procurement document.</p>
     </div>
 
     <div class="step" data-state="1">
       <div class="marker">02 · The number nobody agreed on</div>
       <h2>New money versus recycled commitments</h2>
-      <p>CBC headlined the package as <span class="fig">over $2 billion</span>. The Prime Minister's Office framed it as up to $200 billion of growth. Independent tallies that folded existing programs into the announcement landed <span class="fig">well north of $3.5 billion</span>, not all of it new, some of it repackaging Budget 2025.</p>
+      <p>CBC headlined the package as <a class="fig" href="https://www.cbc.ca/news/politics/carney-ai-strategy-9.7223236">over $2 billion</a>. The Prime Minister's Office framed it as up to $200 billion of growth. Independent tallies that folded existing programs into the announcement landed <a class="fig" href="https://codetocloud.io/blog/canada-ai-for-all">well north of $3.5 billion</a>, not all of it new, some of it repackaging Budget 2025.</p>
       <p class="aside">The ambiguity is not a footnote to the sovereignty story. It is the sovereignty story, announced from the stage before anyone left the room.</p>
     </div>
 
     <div class="step" data-state="2">
       <div class="marker">03 · The centerpiece</div>
       <h2>The supercomputer does not exist</h2>
-      <p>The 2024 Sovereign AI Compute Strategy committed up to $2 billion; Budget 2025 expanded the envelope to <span class="fig">roughly $2.4 billion</span>. The public supercomputer, the centerpiece, runs through a program called SCIP, worth <span class="fig">about $925.6 million</span>.</p>
-      <p>As of November 2025, none of the fifty most powerful supercomputers in the world sat in Canada. SCIP closed applications on June 1, 2026. The winner gets eighteen months from signing to switch the machine on. The clock has not started.</p>
-      <p class="aside">The program guide notes that all funding amounts are "notional and subject to negotiation." Sovereignty-as-press-release shipped in June. Sovereignty-as-infrastructure is a build clause.</p>
+      <p>The 2024 Sovereign AI Compute Strategy committed up to $2 billion; Budget 2025 expanded the envelope to <a class="fig" href="https://beststartup.ca/canada-launches-890-million-ai-supercomputer/">roughly $2.4 billion</a>. The public supercomputer runs through a program called SCIP, worth <a class="fig" href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">about $925.6 million</a>.</p>
+      <p>As of November 2025, none of the fifty most powerful supercomputers in the world sat in Canada. SCIP closed applications June 1, 2026. The winner gets <a class="fig" href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">eighteen months from signing</a> to switch the machine on. The clock has not started.</p>
+      <p class="aside">The program guide notes that all funding amounts are <a class="fig" href="https://ised-isde.canada.ca/site/ised/en/ai-sovereign-compute-infrastructure-program">"notional and subject to negotiation."</a> Sovereignty-as-press-release shipped in June. Sovereignty-as-infrastructure is a build clause.</p>
     </div>
 
     <div class="step" data-state="3">
       <div class="marker">04 · What actually shipped</div>
       <h2>Foreign silicon, Canadian flag</h2>
-      <p>The largest near-term commitment went to Cohere, which received <span class="fig">up to C$240 million</span> to build a data centre with CoreWeave, an American firm running on Nvidia silicon. The flagship sovereignty buy is capacity assembled from the supply chain it claims to escape.</p>
-      <p>The Compute Access Fund is described in its own terms as a subsidy so Canadian firms are "not entirely dependent on American hyperscalers." Not entirely dependent is the honest definition of sovereign.</p>
+      <p>The largest near-term commitment went to Cohere, which received <a class="fig" href="https://www.glennklockwood.com/garden/canadian-sovereign-ai">up to C$240 million</a> to build a data centre with CoreWeave, an American firm running on Nvidia silicon. The flagship sovereignty buy is capacity assembled from the supply chain it claims to escape.</p>
+      <p>The Compute Access Fund is described in its own terms as a subsidy so Canadian firms are <a class="fig" href="https://tech-insider.org/ca/canada-ai-strategy-2026/">"not entirely dependent on American hyperscalers."</a> Not entirely dependent is the honest definition of sovereign.</p>
     </div>
 
     <div class="step" data-state="4">
       <div class="marker">05 · Run the tape on quantum</div>
       <h2>The science stays. The upside drifts south.</h2>
-      <p>Canada's National Quantum Strategy is backed by <span class="fig">$360 million over seven years</span>. Germany committed roughly $2.8 billion CAD, France a €1.8 billion strategy. The government's own consultations warned the funding "may be insufficient to achieve the goals."</p>
-      <p>D-Wave, founded in British Columbia, is now based in Florida. Xanadu merged with a Nasdaq shell, then arranged to raise <span class="fig">up to US$300 million</span> from a firm tied to the Trump family. Not a clean sellout: Xanadu was more than 60 percent Canadian-owned at listing. Canada keeps the lab and rents out the upside.</p>
+      <p>Canada's National Quantum Strategy is backed by <a class="fig" href="https://ised-isde.canada.ca/site/national-quantum-strategy/en/canadas-national-quantum-strategy">$360 million over seven years</a>. Germany committed roughly $2.8 billion CAD, France a €1.8 billion strategy. The government's own consultations warned the funding <a class="fig" href="https://betakit.com/government-of-canada-reveals-plans-for-360-million-national-quantum-strategy/">"may be insufficient to achieve the goals."</a></p>
+      <p>D-Wave, founded in British Columbia, is <a class="fig" href="https://www.theglobeandmail.com/business/technology/article-photonic-raises-200-million-becoming-latest-canadian-quantum-developer/">now based in Florida</a>. Xanadu merged with a Nasdaq shell, then arranged to raise <a class="fig" href="https://www.theglobeandmail.com/business/article-xanadu-strikes-deal-to-raise-us300-million-quantum-stocks-us-funding/">up to US$300 million</a> from a firm tied to the Trump family. Canada keeps the lab and rents out the upside.</p>
     </div>
 
     <div class="step" data-state="5">
       <div class="marker">06 · The portable halo</div>
       <h2>Sovereignty attaches to whatever needs it</h2>
-      <p>Budget 2025 added <span class="fig">$334.3 million</span> for quantum, reclassified under a new Defence Industrial Strategy. The technology did not change. The funding rationale did, migrating to wherever the political appetite was strongest that fiscal year.</p>
+      <p>Budget 2025 added <a class="fig" href="https://thequantuminsider.com/2025/11/06/canada-targets-quantum-as-strategic-industry-in-c334-million-defense-push/">$334.3 million</a> for quantum, reclassified under a new Defence Industrial Strategy. The technology did not change. The funding rationale did, migrating to wherever the political appetite was strongest that fiscal year.</p>
       <p>The word converts an industrial subsidy into a geopolitical virtue, and the conversion completes at the announcement, years before any silicon is poured. The compute strategy concedes its dependence in its own grant language. The quantum strategy filed its own insufficiency in the consultation record.</p>
     </div>
 
@@ -434,15 +475,15 @@
     <li>"Well north of $3.5 billion / repackages Budget 2025" tally: Code To Cloud — <a href="https://codetocloud.io/blog/canada-ai-for-all">codetocloud.io</a> <span class="flag">(named third-party tally, not an official figure)</span></li>
     <li>Sovereign AI Compute Strategy $2B split; launch: Canadian Defence Review / ISED — <a href="https://canadiandefencereview.com/canada-launches-canadian-sovereign-ai-compute-strategy/">canadiandefencereview.com</a></li>
     <li>$2.4B expanded envelope, SCIP $890M: beststartup.ca — <a href="https://beststartup.ca/canada-launches-890-million-ai-supercomputer/">beststartup.ca</a></li>
-    <li>SCIP $925.6M, 18-month build, no Canadian top-50 supercomputer, Fir ranks 78th: The Logic — <a href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">thelogic.co</a></li>
+    <li>SCIP $925.6M, 18-month build, no Canadian top-50 supercomputer: The Logic — <a href="https://thelogic.co/news/canada-public-supercomputer-artificial-intelligence/">thelogic.co</a></li>
     <li>"Notional and subject to negotiation": ISED SCIP program page — <a href="https://ised-isde.canada.ca/site/ised/en/ai-sovereign-compute-infrastructure-program">ised-isde.canada.ca</a></li>
-    <li>Cohere up to C$240M with CoreWeave: G. Lockwood, Canadian sovereign AI notes — <a href="https://www.glennklockwood.com/garden/canadian-sovereign-ai">glennklockwood.com</a> <span class="flag">(funding envelope reported as "likely" the AI Compute Challenge)</span></li>
+    <li>Cohere up to C$240M with CoreWeave: G. Lockwood — <a href="https://www.glennklockwood.com/garden/canadian-sovereign-ai">glennklockwood.com</a> <span class="flag">(funding envelope reported as "likely" the AI Compute Challenge)</span></li>
     <li>"Not entirely dependent on American hyperscalers": Tech Insider Canada — <a href="https://tech-insider.org/ca/canada-ai-strategy-2026/">tech-insider.org</a></li>
     <li>National Quantum Strategy $360M / seven years: ISED — <a href="https://ised-isde.canada.ca/site/national-quantum-strategy/en/canadas-national-quantum-strategy">ised-isde.canada.ca</a></li>
-    <li>Germany / France comparison, "drop in the bucket": PostQuantum op-ed — <a href="https://postquantum.com/quantum-policies/canadas-national-quantum-strategy/">postquantum.com</a></li>
+    <li>Germany / France comparison: PostQuantum op-ed — <a href="https://postquantum.com/quantum-policies/canadas-national-quantum-strategy/">postquantum.com</a></li>
     <li>Consultation "may be insufficient" finding: BetaKit — <a href="https://betakit.com/government-of-canada-reveals-plans-for-360-million-national-quantum-strategy/">betakit.com</a></li>
-    <li>D-Wave Florida-based; Xanadu &gt;60% Canadian-owned; three billion-dollar developers: The Globe and Mail — <a href="https://www.theglobeandmail.com/business/technology/article-photonic-raises-200-million-becoming-latest-canadian-quantum-developer/">theglobeandmail.com</a></li>
-    <li>Xanadu up to US$300M, Yorkville / Trump-family ties: The Globe and Mail — <a href="https://www.theglobeandmail.com/business/article-xanadu-strikes-deal-to-raise-us300-million-quantum-stocks-us-funding/">theglobeandmail.com</a></li>
+    <li>D-Wave Florida-based; Xanadu Canadian-owned at listing: The Globe and Mail — <a href="https://www.theglobeandmail.com/business/technology/article-photonic-raises-200-million-becoming-latest-canadian-quantum-developer/">theglobeandmail.com</a></li>
+    <li>Xanadu up to US$300M, Trump-family ties: The Globe and Mail — <a href="https://www.theglobeandmail.com/business/article-xanadu-strikes-deal-to-raise-us300-million-quantum-stocks-us-funding/">theglobeandmail.com</a></li>
     <li>Budget 2025 $334.3M quantum under Defence Industrial Strategy: The Quantum Insider — <a href="https://thequantuminsider.com/2025/11/06/canada-targets-quantum-as-strategic-industry-in-c334-million-defense-push/">thequantuminsider.com</a></li>
   </ol>
 </section>
@@ -454,64 +495,163 @@
 <script>
 (function(){
   var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-  var units = Array.prototype.slice.call(document.querySelectorAll('#units .u'));
+  var units = Array.prototype.slice.call(document.querySelectorAll('#units .s-unit'));
   var rackframe = document.getElementById('rackframe');
   var shell = document.getElementById('shell');
   var stamp = document.getElementById('stamp');
   var caption = document.getElementById('caption');
-  var drift = document.getElementById('driftgroup');
-  var rPhase = document.getElementById('r-phasev');
+  var xmark = document.getElementById('xmark');
+  var foreignLabel = document.getElementById('foreign-label');
+  var driftOverlay = document.getElementById('drift-overlay');
+  var visLabel = document.getElementById('vis-label');
+  var rPhasev = document.getElementById('r-phasev');
   var rFill = document.getElementById('r-fill');
   var rPct = document.getElementById('r-pct');
   var rLabel = document.getElementById('r-label');
 
-  // state definitions: what the build looks like at each scroll step
-  var STATES = {
-    0:{units:0,foreign:0,frame:false,shell:true,stamp:true,cap:'site: notional',phase:'Announcement',pct:0,label:'Public supercomputer build',drift:false},
-    1:{units:0,foreign:0,frame:false,shell:true,stamp:true,cap:'budget: contested',phase:'Costing',pct:0,label:'New money confirmed',drift:false},
-    2:{units:0,foreign:0,frame:true,shell:true,stamp:true,cap:'SCIP: bidding closed',phase:'Procurement',pct:0,label:'Build clock (18 mo)',drift:false},
-    3:{units:0,foreign:3,frame:true,shell:true,stamp:true,cap:'racks: CoreWeave / Nvidia',phase:'Near-term buy',pct:0,label:'Domestically owned compute',drift:false},
-    4:{units:0,foreign:3,frame:true,shell:true,stamp:true,cap:'quantum: HQ drifting',phase:'Quantum',pct:0,label:'Champions retained at home',drift:true},
-    5:{units:0,foreign:3,frame:true,shell:true,stamp:true,cap:'rationale: portable',phase:'Reclassified',pct:0,label:'Sovereign infrastructure online',drift:true}
-  };
+  var STATES = [
+    {
+      shellClass:'',
+      frameClass:'',
+      foreignCount:0,
+      foreignLabel:false,
+      xmark:false,
+      drift:false,
+      stampText:'Announced',
+      cap:'site: notional',
+      visText:'',
+      phase:'Announcement',
+      pct:0,
+      pctLabel:'Public supercomputer build',
+      fillClass:''
+    },
+    {
+      shellClass:'',
+      frameClass:'',
+      foreignCount:0,
+      foreignLabel:false,
+      xmark:false,
+      drift:false,
+      stampText:'Announced',
+      cap:'budget: contested',
+      visText:'$2B → $3.5B → ???',
+      phase:'Costing',
+      pct:0,
+      pctLabel:'New money confirmed',
+      fillClass:''
+    },
+    {
+      shellClass:'built',
+      frameClass:'lit',
+      foreignCount:0,
+      foreignLabel:false,
+      xmark:false,
+      drift:false,
+      stampText:'Announced',
+      cap:'SCIP: applications closed June 1',
+      visText:'Clock not started',
+      phase:'Procurement',
+      pct:0,
+      pctLabel:'Build clock: 18 months from award',
+      fillClass:''
+    },
+    {
+      shellClass:'built',
+      frameClass:'warn',
+      foreignCount:6,
+      foreignLabel:true,
+      xmark:false,
+      drift:false,
+      stampText:'FOREIGN SILICON',
+      cap:'racks: CoreWeave / Nvidia',
+      visText:'Not entirely sovereign',
+      phase:'Near-term buy',
+      pct:0,
+      pctLabel:'Domestically owned compute',
+      fillClass:'foreign'
+    },
+    {
+      shellClass:'cracked',
+      frameClass:'warn',
+      foreignCount:6,
+      foreignLabel:true,
+      xmark:false,
+      drift:true,
+      stampText:'HQ: DRIFTING',
+      cap:'quantum: companies heading south',
+      visText:'',
+      phase:'Quantum',
+      pct:0,
+      pctLabel:'Champions retained in Canada',
+      fillClass:'foreign'
+    },
+    {
+      shellClass:'cracked',
+      frameClass:'warn',
+      foreignCount:6,
+      foreignLabel:false,
+      xmark:true,
+      drift:false,
+      stampText:'RECLASSIFIED',
+      cap:'rationale: portable',
+      visText:'Sovereignty™',
+      phase:'Reclassified',
+      pct:0,
+      pctLabel:'Sovereign infrastructure online',
+      fillClass:'foreign'
+    }
+  ];
 
-  function apply(s){
-    var st = STATES[s];
+  function apply(idx){
+    var st = STATES[idx];
     if(!st) return;
-    // units: filled (yellow) vs foreign (orange dashed)
-    units.forEach(function(u,i){
-      u.classList.remove('filled','foreign');
-      if(i < st.foreign){ u.classList.add('foreign'); }
-      else if(i < st.foreign + st.units){ u.classList.add('filled'); }
+
+    shell.className = 's-shell' + (st.shellClass ? ' ' + st.shellClass : '');
+    rackframe.className = 's-frame' + (st.frameClass ? ' ' + st.frameClass : '');
+
+    units.forEach(function(u, i){
+      u.className = 's-unit' + (i < st.foreignCount ? ' foreign' : '');
     });
-    rackframe.classList.toggle('lit', st.frame);
-    shell.style.opacity = st.shell ? '0.6' : '0';
-    stamp.classList.toggle('show', st.stamp);
+
+    foreignLabel.style.opacity = st.foreignLabel ? '1' : '0';
+    xmark.style.opacity = st.xmark ? '1' : '0';
+    driftOverlay.classList.toggle('show', st.drift);
+
+    stamp.textContent = st.stampText;
+    stamp.classList.add('show');
+
     caption.textContent = st.cap;
-    drift.setAttribute('opacity', st.drift ? '1' : '0');
-    drift.style.transform = st.drift ? 'translate(70px,-40px)' : 'translate(0,0)';
-    rPhase.textContent = st.phase;
+
+    if(st.visText){
+      visLabel.textContent = st.visText;
+      visLabel.style.color = idx === 5 ? 'var(--orange)' : 'rgba(245,245,220,0.7)';
+      visLabel.classList.add('show');
+    } else {
+      visLabel.classList.remove('show');
+    }
+
+    rPhasev.textContent = st.phase;
     rFill.style.width = st.pct + '%';
+    rFill.className = 'bar-fill' + (st.fillClass ? ' ' + st.fillClass : '');
     rPct.textContent = st.pct + '% complete';
-    rLabel.textContent = st.label;
+    rLabel.textContent = st.pctLabel;
   }
 
-  // observer drives active step + build state
-  var current = 0;
+  var current = -1;
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
         steps.forEach(function(x){x.classList.remove('active');});
         e.target.classList.add('active');
-        var s = parseInt(e.target.getAttribute('data-state'),10);
+        var s = parseInt(e.target.getAttribute('data-state'), 10);
         if(s !== current){ current = s; apply(s); }
       }
     });
-  },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+  },{rootMargin:'-42% 0px -42% 0px', threshold:0});
 
   steps.forEach(function(s){ io.observe(s); });
   apply(0);
-  if(steps[0]) steps[0].classList.add('active');
+  steps[0] && steps[0].classList.add('active');
 })();
 </script>
 
